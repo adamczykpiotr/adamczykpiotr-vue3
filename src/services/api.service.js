@@ -1,0 +1,1 @@
+export const url = process.env.SERVER_ADDRESS ?? 'https://api.adamczykpiotr.com/wp-json';
