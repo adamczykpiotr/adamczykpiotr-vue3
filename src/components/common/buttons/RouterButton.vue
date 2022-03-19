@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import BaseButton from "@/components/common/BaseButton";
+import BaseButton from "@/components/common/buttons/BaseButton";
 
 export default {
   name: "RouterButton",

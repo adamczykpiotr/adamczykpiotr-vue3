@@ -1,14 +1,20 @@
 <template>
   <NavBar/>
-  <router-view/>
+
+  <main>
+    <RouterTransitionView/>
+  </main>
+
 </template>
 
 <script>
 import NavBar from "@/components/Navbar";
+import RouterTransitionView from "@/components/common/misc/RouterTransitionView";
 
 export default {
   name: 'App',
   components: {
+    RouterTransitionView,
     NavBar
   }
 };

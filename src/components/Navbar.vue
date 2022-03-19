@@ -37,8 +37,8 @@
 </template>
 
 <script>
-import RouterButton from "@/components/common/RouterButton";
-import BaseButton from "@/components/common/BaseButton";
+import RouterButton from "@/components/common/buttons/RouterButton";
+import BaseButton from "@/components/common/buttons/BaseButton";
 
 export default {
   name: 'NavBar',
