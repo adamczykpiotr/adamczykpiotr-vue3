@@ -6,7 +6,11 @@
         Adamczyk Piotr
       </router-link>
 
-      <HamburgerButton @hamburgerToggle="onHamburgerToggle" @click="a"/>
+      <button class="hamburger" :class="{'hamburger--open' : !isOpen}" @click=hamburgerToggle>
+        <span class="hamburger__bar hamburger__bar--top"></span>
+        <span class="hamburger__bar hamburger__bar--middle"></span>
+        <span class="hamburger__bar hamburger__bar--bottom"></span>
+      </button>
 
       <div class="navbar__collapse" ref="collapse">
         <div class="navbar__collapse__inner" ref="collapseInner">
@@ -34,32 +38,28 @@
 
 <script>
 import RouterButton from "@/components/common/RouterButton";
-import HamburgerButton from "@/components/common/HamburgerButton";
 import BaseButton from "@/components/common/BaseButton";
 
 export default {
   name: 'NavBar',
-  components: {BaseButton, HamburgerButton, RouterButton},
+  components: {BaseButton, RouterButton},
   data() {
     return {
       isOpen: false
     }
   },
   methods: {
-    onHamburgerToggle: function (e) {
-      this.isOpen = e.isOpen;
-      this.a();
+    hamburgerToggle: function () {
+      this.toggleMenu(!this.isOpen);
     },
     hideMenu: function () {
-      this.isOpen = false;
+      this.toggleMenu(false);
     },
-    a: function () {
-      const targetHeight = (this.isOpen)
+    toggleMenu: function (shouldBeOpen) {
+      this.isOpen = shouldBeOpen;
+      this.$refs.collapse.style.maxHeight = (this.isOpen)
           ? `${this.$refs.collapseInner.clientHeight}px`
           : 0;
-
-      console.log(this.isOpen, targetHeight);
-      this.$refs.collapse.style.maxHeight = targetHeight;
     }
   },
 };
@@ -153,10 +153,58 @@ export default {
   }
 
   .hamburger {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+
     @media(min-width: $md) {
       display: none;
     }
-  }
 
+    &:focus {
+      outline: none;
+    }
+
+    //Hamburger menu animation: http://kylegoslan.co.uk/bootstrap-4-hamburger-menu-animation/
+    &__bar {
+      width: 22px;
+      height: 2px;
+      display: block;
+      background-color: $yellow;
+      transition: 0.3s ease;
+      margin-top: 4px;
+
+      &--top {
+        transform: rotate(45deg);
+        transform-origin: 10% 10%;
+      }
+
+      &--middle {
+        opacity: 0;
+      }
+
+      &--bottom {
+        transform: rotate(-45deg);
+        transform-origin: 10% 90%;
+      }
+    }
+
+    &--open {
+      .hamburger__bar {
+        &--top {
+          transform: rotate(0);
+        }
+
+        &--middle {
+          opacity: 1;
+        }
+
+        &--bottom {
+          transform: rotate(0);
+        }
+      }
+    }
+  }
 }
 </style>

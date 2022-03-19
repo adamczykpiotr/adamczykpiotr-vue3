@@ -1,16 +1,17 @@
 <template>
   <button class="btn" :class="{'btn--active' : active}">
-    <slot/>
+    <slot>
+      Button
+    </slot>
   </button>
 </template>
 
 <script>
 export default {
-  // eslint-disable-next-line vue/multi-word-component-names
-  name: "ButtonZ",
+  name: "BaseButton",
   props: [
-    'active'
-  ]
+    'active',
+  ],
 }
 </script>
 

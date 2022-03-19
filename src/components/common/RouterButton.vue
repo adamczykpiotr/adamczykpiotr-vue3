@@ -1,21 +1,28 @@
 <template>
-  <router-link :to=to v-slot="{ isActive }">
-    <Button :active=isActive>
-      <slot/>
-    </Button>
+  <router-link :to=to v-slot="{ isActive }" @click="onClick">
+    <BaseButton :active=isActive>
+      <slot>
+        Link
+      </slot>
+    </BaseButton>
   </router-link>
 </template>
 
 <script>
-import Button from "@/components/common/Button";
+import BaseButton from "@/components/common/BaseButton";
 
 export default {
   name: "RouterButton",
   components: {
-    Button
+    BaseButton,
   },
   props: [
-    'to'
-  ]
+    'to',
+  ],
+  methods: {
+    onClick: function () {
+      this.$emit('routerButtonClick');
+    }
+  }
 }
 </script>
