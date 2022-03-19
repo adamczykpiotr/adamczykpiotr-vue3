@@ -3,7 +3,7 @@
     <div class="container">
 
       <router-link class="navbar__brand" to="/">
-        Adamczyk Piotr
+        {{ $t('me.fullName') }}
       </router-link>
 
       <button class="hamburger" :class="{'hamburger--open' : !isOpen}" @click=hamburgerToggle>
@@ -17,10 +17,10 @@
 
           <div class="navbar__links">
             <RouterButton to="/" @click="hideMenu">
-              Home
+              {{ $t('nav.home') }}
             </RouterButton>
             <RouterButton to="/cv" @click="hideMenu">
-              CV
+              {{ $t('nav.cv') }}
             </RouterButton>
           </div>
 

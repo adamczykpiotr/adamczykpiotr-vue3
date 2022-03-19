@@ -1,0 +1,20 @@
+{
+  "me": {
+    "name": "Piotr",
+    "surname": "Adamczyk",
+    "fullName": "@:me.surname @:me.name",
+    "position": "Full-Stack Developer"
+  },
+  "nav": {
+    "home": "Start",
+    "cv": "CV",
+    "about": "O mnie"
+  },
+  "404": {
+    "message": "Strona, ktorej szukasz nie istnieje.",
+    "goHome": "Przejdź do strony głównej"
+  },
+  "footer": {
+    "copyright": "Copyright © {year} {author}. Wszelkie prawa zastrzeżone."
+  }
+}
