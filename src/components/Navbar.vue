@@ -6,46 +6,60 @@
         Adamczyk Piotr
       </router-link>
 
-      <div class="navbar__links">
+      <HamburgerButton @hamburgerToggle="onHamburgerToggle" @click="a"/>
 
-        <RouterButton to="/">
-          Home
-        </RouterButton>
+      <div class="navbar__collapse" ref="collapse">
+        <div class="navbar__collapse__inner" ref="collapseInner">
 
-        <RouterButton to="/cv">
-          CV
-        </RouterButton>
+          <div class="navbar__links">
+            <RouterButton to="/" @click="hideMenu">
+              Home
+            </RouterButton>
+            <RouterButton to="/cv" @click="hideMenu">
+              CV
+            </RouterButton>
+          </div>
 
+          <!-- TODO: Language switch -->
+          <div class="navbar__lang">
+            <BaseButton :active=true>EN</BaseButton>
+            <BaseButton>PL</BaseButton>
+          </div>
+
+        </div>
       </div>
-
-      <div class="navbar__lang">
-        <Button :active=true>EN</Button>
-        <Button>PL</Button>
-      </div>
-
-      <!--
-      <button type="button" aria-label="Toggle navigation" class="navbar-toggler collapsed">
-        <span class="icon-bar d-block top-bar"></span>
-        <span class="icon-bar d-block middle-bar"></span>
-        <span class="icon-bar d-block bottom-bar"></span>
-      </button>
-      -->
-
     </div>
   </nav>
 </template>
 
 <script>
-import Button from "@/components/common/Button";
 import RouterButton from "@/components/common/RouterButton";
+import HamburgerButton from "@/components/common/HamburgerButton";
+import BaseButton from "@/components/common/BaseButton";
 
 export default {
   name: 'NavBar',
-  components: {RouterButton, Button},
+  components: {BaseButton, HamburgerButton, RouterButton},
+  data() {
+    return {
+      isOpen: false
+    }
+  },
   methods: {
-    c: function (e) {
-      console.log(e);
-      console.log('a');
+    onHamburgerToggle: function (e) {
+      this.isOpen = e.isOpen;
+      this.a();
+    },
+    hideMenu: function () {
+      this.isOpen = false;
+    },
+    a: function () {
+      const targetHeight = (this.isOpen)
+          ? `${this.$refs.collapseInner.clientHeight}px`
+          : 0;
+
+      console.log(this.isOpen, targetHeight);
+      this.$refs.collapse.style.maxHeight = targetHeight;
     }
   },
 };
@@ -64,27 +78,61 @@ export default {
 
   .container {
     display: flex;
+    flex-wrap: wrap;
   }
 
   &__brand {
+    display: flex;
     font-size: 1.25rem;
     font-weight: 400;
     text-decoration: none;
     padding: 0.3125rem 0;
-
     margin-right: 1rem;
+    flex-grow: 1;
 
-
-    @media(min-width: $lg) {
-      margin-right: 2rem;
+    @media(min-width: $md) {
+      flex-grow: unset;
     }
 
-    @media(min-width: $xl) {
+    @media(min-width: $lg) {
       font-size: 1.5rem;
+      margin-right: 2rem;
+    }
+  }
+
+  &__collapse {
+    max-height: 0;
+    width: 100%;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+
+    @media(min-width: $md) {
+      display: flex;
+      flex-grow: 1;
+
+      width: auto;
+      max-height: unset !important;
+    }
+
+    &--collapsed {
+      transform: scaleY(1);
+    }
+
+    &__inner {
+      display: flex;
+      flex-grow: 1;
+      padding-top: 1rem;
+
+      @media(min-width: $md) {
+        padding-top: 0;
+      }
     }
   }
 
   &__links {
+    display: flex;
+    flex-grow: 1;
+
     a {
       margin-right: 1rem;
 
@@ -93,130 +141,22 @@ export default {
       }
     }
   }
-}
 
+  &__lang {
+    button {
+      margin-right: 1rem;
 
-.navbar-toggler {
-  border: none;
-  background: transparent !important;
-  margin-right: -0.75rem;
-
-  &:focus {
-    outline: none;
-  }
-
-
-  //Hamburger menu animation: http://kylegoslan.co.uk/bootstrap-4-hamburger-menu-animation/
-  .icon-bar {
-    width: 22px;
-    height: 2px;
-    background-color: $yellow;
-    transition: 0.3s ease;
-    margin-top: 4px;
-
-    &.top-bar {
-      transform: rotate(45deg);
-      transform-origin: 10% 10%;
-    }
-
-    &.middle-bar {
-      opacity: 0;
-    }
-
-    &.bottom-bar {
-      transform: rotate(-45deg);
-      transform-origin: 10% 90%;
-    }
-  }
-
-  &.collapsed {
-    .icon-bar {
-      &.top-bar {
-        transform: rotate(0);
-      }
-
-      &.middle-bar {
-        opacity: 1;
-      }
-
-      &.bottom-bar {
-        transform: rotate(0);
-      }
-    }
-  }
-}
-
-.navbar-brand {
-
-}
-
-ul li {
-  margin-right: 1rem !important;
-
-  a {
-    padding: 0.25rem 0.825rem !important;
-    border: 1px solid transparent;
-    border-bottom-color: $yellow;
-    color: $dark !important;
-    transition: 0.3s ease;
-
-
-    &:last-child {
-      margin-right: 0;
-    }
-
-    &:hover {
-      border-color: $yellow;
-      text-decoration: none;
-    }
-
-    &.router-link-exact-active {
-      border-color: $yellow;
-      background-color: $yellow;
-    }
-  }
-}
-
-.nav-item {
-  margin-right: 0.5rem;
-
-  &:last-child {
-    margin-right: 0;
-  }
-}
-
-.right {
-  justify-content: space-evenly;
-  margin-top: 0.5rem;
-
-  @media(min-width: $md) {
-    flex-grow: 1;
-    justify-content: flex-end;
-    margin: 0;
-  }
-
-  li {
-
-    padding: 0 0.5rem;
-    margin: 0;
-
-    @media(min-width: $md) {
-      padding: 0 0.25rem;
-      margin-right: 0.5rem;
-
-      &:last-child {
+      &:last-of-type {
         margin-right: 0;
       }
     }
+  }
 
-    &.active a {
-      border-color: $yellow;
-      background-color: $yellow;
-    }
-
-    a {
-      transition: 0.3s ease;
+  .hamburger {
+    @media(min-width: $md) {
+      display: none;
     }
   }
+
 }
 </style>
