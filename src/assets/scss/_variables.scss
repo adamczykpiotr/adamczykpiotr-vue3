@@ -3,10 +3,12 @@ $yellow: #f7d945;
 $yellowDark: #ae9e00;
 
 $blue: #4563F7;
+$gray: #43413c;
+$dark: #343a40;
 
-$gray: #43413c; //TODO: Rename
-$dark: #343a40; //TODO: Rename
-$light: #f1f1f1; //TODO: Rename
+$blackIsh: #010101;
+$whiteIsh: #f1f1f1;
+$lightGray: #ababb5;
 
 //Breakpoints:
 $xs: 0;
@@ -15,3 +17,4 @@ $md: 768px;
 $lg: 992px;
 $xl: 1200px;
 $xxl: 1400px;
+$ultraWide: 1800px;

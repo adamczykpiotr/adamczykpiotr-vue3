@@ -109,6 +109,7 @@ export default {
     @media(min-width: $md) {
       display: flex;
       flex-grow: 1;
+      align-self: center;
 
       width: auto;
       max-height: unset !important;
