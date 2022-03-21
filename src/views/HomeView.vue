@@ -11,7 +11,7 @@
       </div>
     </section>
 
-    <section class="terminal-wrapper">
+    <section class="terminal__wrapper">
       <Terminal/>
     </section>
 
@@ -29,7 +29,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "src/assets/scss/variables";
 
 .container {
@@ -80,7 +80,7 @@ export default {
   }
 }
 
-.terminal-wrapper {
+.terminal__wrapper {
   background-color: $yellow;
   margin: 0.5rem -0.5rem;
   padding: 0.5rem;
@@ -113,16 +113,16 @@ export default {
 }
 
 .about,
-.terminal-wrapper {
+.terminal__wrapper {
   position: relative;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
   @media(min-width: $lg) {
     width: 50%;
     height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
   }
 }
 </style>

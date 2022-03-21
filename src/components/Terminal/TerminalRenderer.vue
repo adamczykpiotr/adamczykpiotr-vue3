@@ -19,8 +19,8 @@ export default {
     'input'
   ],
   watch: {
-    input: function (input) {
-      this.handle(input.input);
+    input: function (terminalInput) {
+      this.handle(terminalInput.input);
     },
   },
   computed: {
@@ -35,28 +35,6 @@ export default {
     },
   },
   methods: {
-
-    /**
-     *
-     *
-     * @param input
-     */
-    handle: function (input) {
-
-      const separator = input.indexOf(' ');
-      const app = (separator === -1) ? input : input.substr(0, separator);
-      const args = (separator === -1) ? '' : input.substr(separator + 1);
-
-      const functionName = `_command${app.charAt(0).toUpperCase() + app.slice(1).toLowerCase()}`;
-      const output = (typeof this[functionName] === 'function')
-          ? this[functionName](args)
-          : this.invalidCommand();
-
-      this.render(typeof output === 'string'
-          ? output
-          : ''
-      );
-    },
 
 
     /**
@@ -143,10 +121,37 @@ export default {
       return `${this.loginAs}</br>${this.lastVisit}</br></br>${translate('terminal.initialMessage').replace('%enter%', '<kbd>Enter</kbd>')}`;
     },
 
-
+    /**
+     * Displays warning about invalid command
+     *
+     * @returns {string}
+     */
     invalidCommand() {
       return `${translate('terminal.invalidCommand')}</br></br>${translate('terminal.initialMessage').replace('%enter%', '<kbd>Enter</kbd>')}`;
     },
+
+    /**
+     * Handles command calls
+     *
+     * @param input
+     */
+    handle: function (input) {
+
+      const separator = input.indexOf(' ');
+      const app = (separator === -1) ? input : input.substr(0, separator);
+      const args = (separator === -1) ? '' : input.substr(separator + 1);
+
+      const functionName = `_command${app.charAt(0).toUpperCase() + app.slice(1).toLowerCase()}`;
+      const output = (typeof this[functionName] === 'function')
+          ? this[functionName](args)
+          : this.invalidCommand();
+
+      this.render(typeof output === 'string'
+          ? output
+          : ''
+      );
+    },
+
 
     /**
      * Renders command output
@@ -192,34 +197,33 @@ section {
     background: #181818;
     color: #fff;
   }
+}
 
-  h2 {
-    font-size: 1em;
-    font-weight: 400;
-  }
+h2 {
+  font-size: 1em;
+  font-weight: 400;
+}
 
-  p {
-    margin-bottom: 2em;
-  }
+p {
+  margin-bottom: 2em;
+}
 
-  .cursor {
-    color: #999;
-    line-height: 1;
-  }
+.cursor {
+  color: #999;
+  line-height: 1;
+}
 
+ul {
+  list-style: none;
+  padding: 0;
+}
 
-  ul {
-    list-style: none;
-    padding: 0;
-  }
+li {
+  margin: 1em 0 0;
+}
 
-  li {
-    margin: 1em 0 0;
-  }
-
-  a {
-    color: #c2c4c6;
-  }
+a {
+  color: #c2c4c6;
 }
 
 

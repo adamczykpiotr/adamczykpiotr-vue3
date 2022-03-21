@@ -1,5 +1,5 @@
 <template>
-  <div class="terminal" :class="[state, disableTransition]" ref="terminal" @click="focusInput">
+  <div class="terminal" :class="state" ref="terminal" @click="focusInput">
 
     <div class="terminal__bar">
       <div class="terminal__bar__icons">
@@ -19,7 +19,7 @@
         <span class="terminal__user">{{ terminalUser }}</span>
         <label>
           <input autocomplete="off" autocapitalize="off" spellcheck="false" type="text" ref="input"
-                 v-on:keyup.enter="processCommand()"
+                 v-on:keyup.enter="handleInput()"
                  v-on:keyup.up="restoreHistory(1)"
                  v-on:keyup.down="restoreHistory(-1)"/>
         </label>
@@ -40,7 +40,6 @@ export default {
     return {
       isRendering: false,
 
-      rawInput: '',
       terminalInput: {
         input: '',
         time: 0,
@@ -52,7 +51,6 @@ export default {
       username: this.$t('terminal.guest'),
 
       state: '',
-      disableTransition: 'no-transition',
     }
   },
   computed: {
@@ -74,20 +72,20 @@ export default {
       this.isRendering = false;
     },
 
-    processCommand() {
-      if (this.isRendering) return;
-
+    handleInput() {
       const command = this.$refs.input.value;
 
-      //push history
+      if (this.isRendering || command.length === 0) return;
+
+      // Push history
       if (this.history[this.history.length - 1] !== command) this.history.push(command);
-      this.history = this.history.slice(0, 50); //keep only last 50 commands
+      this.history = this.history.slice(0, 50); // Keep only last 50 commands
       this.historyIndex = this.history.length;
 
-      //clear input
+      // Clear input
       this.$refs.input.value = "";
 
-      this.emitCommand(command);
+      this.executeCommand(command);
     },
 
     restoreHistory(shift) {
@@ -108,26 +106,24 @@ export default {
       }
     },
 
-    emitCommand(input) {
+    executeCommand(input) {
       this.isRendering = true;
 
       this.terminalInput = {
         input: input,
-        time: new Date().valueOf(),
+        time: new Date().valueOf(), // Timestamp is passed to make watch work with the same input twice
       }
+
+      // TerminalRenderer is watching for changes
     }
   },
   mounted() {
     this.state = localStorage.getItem('terminalState');
-    //  localStorage.setItem('terminalLastVisit', new Date().toUTCString()); TODO: Move this to work in the whole app
+    //localStorage.setItem('terminalLastVisit', new Date().toUTCString()); TODO: Move this to work in the whole app
 
     //Load welcome screen
-    setTimeout(() => {
-      this.disableTransition = '';
-      this.emitCommand('welcome');
-      this.focusInput();
-    }, 100);
-
+    this.executeCommand('welcome');
+    this.focusInput();
   }
 };
 </script>
