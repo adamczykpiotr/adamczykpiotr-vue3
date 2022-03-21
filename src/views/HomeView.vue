@@ -29,7 +29,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "src/assets/scss/variables";
 
 .container {
@@ -46,6 +46,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding: 1rem 0;
 
   h1 {
     font-size: 4rem;
