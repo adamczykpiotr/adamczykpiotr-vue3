@@ -1,5 +1,7 @@
 # adamczykpiotr-com
 
+Simple [adamczykpiotr.com](adamczykpiotr.com) homepage built with Vue.js 3
+
 ## Project setup
 ```
 yarn install
