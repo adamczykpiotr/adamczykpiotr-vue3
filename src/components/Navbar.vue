@@ -19,15 +19,15 @@
             <RouterButton to="/" @click="hideMenu">
               {{ $t('nav.home') }}
             </RouterButton>
-            <RouterButton to="/cv" @click="hideMenu">
+            <!--<RouterButton to="/cv" @click="hideMenu">
               {{ $t('nav.cv') }}
-            </RouterButton>
+            </RouterButton>-->
           </div>
 
           <!-- TODO: Language switch -->
           <div class="navbar__lang">
             <BaseButton :active=true>EN</BaseButton>
-            <BaseButton>PL</BaseButton>
+            <BaseButton :disabled=true>PL</BaseButton>
           </div>
 
         </div>
