@@ -1,5 +1,5 @@
 <template>
-  <button class="btn" :class="{'btn--active' : active}">
+  <button class="btn" :class="{'btn--active': active, 'btn--disabled': disabled}">
     <slot>
       Button
     </slot>
@@ -11,6 +11,7 @@ export default {
   name: "BaseButton",
   props: [
     'active',
+    'disabled'
   ],
 }
 </script>
@@ -29,6 +30,14 @@ export default {
   &:hover,
   &--active {
     background-color: $yellow;
+  }
+
+  &--disabled {
+    cursor: not-allowed;
+
+      &:hover {
+        background-color: #eee;
+      }
   }
 }
 </style>
